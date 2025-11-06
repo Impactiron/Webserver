@@ -7,11 +7,10 @@ from bestellsystem.utils.errors import register_error_handlers
 from bestellsystem.utils.logging import get_logger, setup_logging
 
 
-def create_app(config_name: str | None = None) -> Flask:
+def create_app() -> Flask:
     """Create and configure Flask application.
 
-    Args:
-        config_name: Configuration name (development, production, testing)
+    Configuration is loaded from environment variables via FLASK_ENV.
 
     Returns:
         Configured Flask application instance
@@ -29,7 +28,7 @@ def create_app(config_name: str | None = None) -> Flask:
     )
 
     logger = get_logger(__name__)
-    logger.info("Initializing Flask application", extra={"config": config_name or "default"})
+    logger.info("Initializing Flask application")
 
     # Register error handlers
     register_error_handlers(app)
