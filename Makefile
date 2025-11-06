@@ -1,9 +1,10 @@
-.PHONY: help install dev clean test build deploy
+.PHONY: help install dev clean test build deploy run-backend
 
 help:
 	@echo "Bestellsystem - Available commands:"
 	@echo "  make install     - Install all dependencies (backend + frontend)"
 	@echo "  make dev        - Start development servers"
+	@echo "  make run-backend - Start Flask backend development server"
 	@echo "  make clean      - Clean build artifacts and caches"
 	@echo "  make test       - Run all tests"
 	@echo "  make build      - Build for production"
@@ -23,6 +24,9 @@ dev:
 
 dev-backend:
 	cd backend && . venv/bin/activate && python manage.py runserver
+
+run-backend:
+	cd backend && . venv/bin/activate && flask --app bestellsystem.app:create_app run --host=0.0.0.0 --port=8000 --debug
 
 dev-frontend:
 	cd frontend && npm run dev
