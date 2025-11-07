@@ -21,7 +21,7 @@ class Config:
 
     # Database (for future use)
     DATABASE_URL: str = os.getenv(
-        "DATABASE_URL", "postgresql://bestellsystem:password@localhost/bestellsystem"
+        "DATABASE_URL", "sqlite:///./bestellsystem.db"
     )
 
     @classmethod

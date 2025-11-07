@@ -1,4 +1,4 @@
-.PHONY: help install dev clean test build deploy run-backend
+.PHONY: help install dev clean test build deploy run-backend db-upgrade db-revise
 
 help:
 	@echo "Bestellsystem - Available commands:"
@@ -9,6 +9,8 @@ help:
 	@echo "  make test       - Run all tests"
 	@echo "  make build      - Build for production"
 	@echo "  make deploy     - Deploy to production"
+	@echo "  make db-upgrade  - Run database migrations"
+	@echo "  make db-revise   - Create a new database migration (use: make db-revise msg=\"description\")"
 
 install:
 	@echo "Installing backend dependencies..."
@@ -50,3 +52,15 @@ build:
 deploy:
 	@echo "Deploying to production..."
 	@echo "See README.md for deployment instructions"
+
+db-upgrade:
+	@echo "Running database migrations..."
+	cd backend && . venv/bin/activate && alembic upgrade head
+
+db-revise:
+	@echo "Creating new database migration..."
+	@if [ -z "$(msg)" ]; then \
+		echo "Error: msg parameter is required. Usage: make db-revise msg=\"your migration message\""; \
+		exit 1; \
+	fi
+	cd backend && . venv/bin/activate && alembic revision --autogenerate -m "$(msg)"
